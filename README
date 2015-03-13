@@ -3,7 +3,7 @@ IMAP4rev1 Client for Go
 
 To download and install this package run:
 
-go get github.com/mxk/go-imap/imap
+go get github.com/simia-tech/go-imap/imapp
 
 The documentation is available at:
 

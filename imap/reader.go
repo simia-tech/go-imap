@@ -320,11 +320,7 @@ func (raw *rawResponse) parseFields(stop byte) (fields []Field, err error) {
 		if len(raw.tail) > 0 && err == nil {
 			switch raw.tail[0] {
 			case ' ':
-				if len(raw.tail) > 1 {
-					raw.tail = raw.tail[1:]
-				} else {
-					err = raw.unexpected(0)
-				}
+				raw.tail = raw.tail[1:]
 			case stop:
 				raw.tail = raw.tail[1:]
 				return

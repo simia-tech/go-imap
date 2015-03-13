@@ -146,7 +146,6 @@ func TestReaderMore(t *testing.T) {
 
 		{"* {0}", nil},
 		{"* {0} " + CRLF, nil},
-		{"* {0}" + CRLF + " ", nil},
 		{"* {0}" + CRLF + "{1}", nil},
 		{"* {1}" + CRLF + "{1}", nil},
 		{"* {1}" + CRLF + "x{1}", nil},
@@ -274,7 +273,6 @@ func TestReaderParse(t *testing.T) {
 		{`* "\\\"`, nil},
 
 		{"* BODY[", nil},
-		{"* BODY[] ", nil},
 		{"* BODY[ ]", nil},
 		{"* BODY[]]", nil},
 		{"* BODY[[]]", nil},
@@ -466,7 +464,7 @@ func TestReaderParse(t *testing.T) {
 			&Response{Tag: "*", Type: Data, Label: "STATUS", Fields: []Field{"STATUS", "blurdybloop", []Field{"MESSAGES", uint32(231), "UIDNEXT", uint32(44292)}}}},
 
 		// Page 54
-		{`* SEARCH 2 84 882`,
+		{`* SEARCH 2 84 882 `,
 			&Response{Tag: "*", Type: Data, Label: "SEARCH", Fields: []Field{"SEARCH", uint32(2), uint32(84), uint32(882)}}},
 
 		// Page 66
