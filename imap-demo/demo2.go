@@ -12,7 +12,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/mxk/go-imap/imap"
+	"github.com/simia-tech/go-imap/imap"
 )
 
 const Addr = "imap.gmail.com:993"
