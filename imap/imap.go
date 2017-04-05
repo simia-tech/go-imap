@@ -377,6 +377,12 @@ func (c *Client) UIDSearch(spec ...Field) (cmd *Command, err error) {
 	return c.Send("UID SEARCH", append([]Field{"CHARSET", "UTF-8"}, spec...)...)
 }
 
+// UIDSearchASCII is identical to Search, but the numbers returned in the response
+// are unique identifiers instead of message sequence numbers.
+func (c *Client) UIDSearchASCII(spec ...Field) (cmd *Command, err error) {
+	return c.Send("UID SEARCH", append([]Field{"CHARSET", "US-ASCII"}, spec...)...)
+}
+
 // UIDFetch is identical to Fetch, but the seq argument is interpreted as
 // containing unique identifiers instead of message sequence numbers.
 func (c *Client) UIDFetch(seq *SeqSet, items ...string) (cmd *Command, err error) {
