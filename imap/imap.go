@@ -353,6 +353,14 @@ func (c *Client) Search(spec ...Field) (cmd *Command, err error) {
 	return c.Send("SEARCH", append([]Field{"CHARSET", "UTF-8"}, spec...)...)
 }
 
+// SearchASCII searches the mailbox for messages that match the given searching
+// criteria. See RFC 3501 section 6.4.4 for a list of all valid search keys. It
+// is the caller's responsibility to quote strings when necessary. All strings
+// must use ASCII encoding.
+func (c *Client) SearchASCII(spec ...Field) (cmd *Command, err error) {
+	return c.Send("SEARCH", append([]Field{"CHARSET", "US-ASCII"}, spec...)...)
+}
+
 // Fetch retrieves data associated with the specified message(s) in the mailbox.
 // See RFC 3501 section 6.4.5 for a list of all valid message data items and
 // macros.
