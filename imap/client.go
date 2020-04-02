@@ -134,6 +134,8 @@ func NewClient(conn net.Conn, host string, timeout time.Duration) (c *Client, er
 	c.r = newReader(c.t, MemoryReader{}, string(c.tag.id))
 	c.Logf(LogConn, "Connected to %v (Tag=%s)", conn.RemoteAddr(), c.tag.id)
 
+	c.yahooHack()
+
 	if err = c.greeting(timeout); err != nil {
 		c.Logln(LogConn, "Greeting error:", err)
 		return nil, err
@@ -141,6 +143,16 @@ func NewClient(conn net.Conn, host string, timeout time.Duration) (c *Client, er
 	c.cch = cch
 	go c.receiver(cch)
 	return
+}
+
+// Yahoo seems to require resending authentication without indicating properly.
+// Thus we allow to login to be executed both in login and auth state when connected to yahoo
+// as of 2nd April, 2020
+func (c *Client) yahooHack() {
+	if strings.Contains(c.host, "yahoo") {
+		c.Logln(LogConn, "Applying yahoo hack")
+		c.CommandConfig["LOGIN"].States = Login | Auth
+	}
 }
 
 // State returns the current connection state (Login, Auth, Selected, Logout, or
